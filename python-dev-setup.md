@@ -7,6 +7,7 @@
    * `virtualenv`
    * `virtualenvwrapper`
    * `pyenv-virtualenv`
+   * `pyenv-virtualenvwrapper`
    * `pipenv`
    * `pew`
    * `anaconda`/`conda`
@@ -19,12 +20,32 @@
    * `pip` or `pyenv ` first?
       * `pyenv` has no `python` dependencies, so if it doesn't exist on the system at all, you'll be fine.
       * `pip` is installed by default by `pyenv`
-   * `pip` or `virtualenv ` first?
-      * `virtualenv ` also installs `pip`. AAAAAGH!!!
+      * You can upgrade this `pip` with either `pip install -U pip` or the curlpipe method. Both will only upgrade the currently active version of Python.
+   * `pip` or `virtualenv` first?
+      * virtualenv also installs `pip`. AAAAAGH!!! Did I mention it also installs setuptools too?
+         * While this is weird, it works out that virtualenv's `pip` will override pyenv's when the virtualenv is activated.
+      * Installing with `pip install virtualenv` is stated to install globally. What if this is done in a `pyenv`?
+         * It will install `virtualenv` for that version of `python`. Other versions of `python` managed by `pyenv` will error out if `virtualenv` is invoked, but will also report that `virtualenv` is installed for a different version.
+         
+         ```
+         # virtualenv
+pyenv: virtualenv: command not found
+The 'virtualenv' command exists in these Python versions:
+  2.7.14
+         ```
+   
+         * NOTE: Older versions of python may get a virtualenv version of `pip` earlier than 9.0.1. You may run into [this TLS issue](https://stackoverflow.com/questions/49748063/pip-install-fails-for-every-package-could-not-find-a-version-that-satisfies/49748494#49748494). The fix is to upgrade `pip` and setuptools. The `pip` upgrade will need to be done with a curlpipe because `pip install -U pip` will hit the same issue. The curlpipe will only upgrade `pip` for the current virtualenv. This is because the script is piped into `python` which is currently shimmed by pyenv and virtualenv
+         
+         ```
+         curl https://bootstrap.pypa.io/get-pip.py | python
+         pip install --upgrade setuptools
+         ```
+            
    * If I install `pip` with `get-pip.py` in a `pyenv` folder, is this `pip` relative to the OS/System or the `pyenv` folder?
    * `pyenv` or `virtualenv` first?
       * `virtualenv` should be installed per `pyenv` environment. Since `pip` is intstalled by `pyenv`, we should be able to `pip install virtualenv`.	
    * If `virtualenv` is used at the project level, where does it get installed, and how is the path updated to be able to call `virtualenv`? Is it shims?
+   * When I commit code to `git` in a `virtualenv`, do I commit all the folders used by `virtualenv`?
    * How to switch `python` version in a `virtualenv`?
    * When/where do you install `pipsi`?
    * What should be installed with `pipsi`?
@@ -109,11 +130,13 @@ eval "$(pyenv init -)"
 ##Installation Docs
 * [pyenv](https://github.com/pyenv/pyenv-installer#installation--update--uninstallation)
 * [pip](https://virtualenv.pypa.io/en/stable/installation/)
+* [virtualenv](https://virtualenv.pypa.io/en/stable/installation/)
 
 ##Links
 * [Python Virtual Environments: A Primer](https://realpython.com/python-virtual-environments-a-primer/)
 * [What is the difference between venv, pyvenv, pyenv, virtualenv, virtualenvwrapper, pipenv, etc?](https://stackoverflow.com/questions/41573587/what-is-the-difference-between-venv-pyvenv-pyenv-virtualenv-virtualenvwrappe)
 * [Installing Python Modules](https://docs.python.org/3/installing/index.html)
+* [The definitive guide to setup my Python workspace](https://medium.com/@henriquebastos/the-definitive-guide-to-setup-my-python-workspace-628d68552e14)
 
 ##Links (older)
 * [pipsi - github](https://github.com/mitsuhiko/pipsi)
