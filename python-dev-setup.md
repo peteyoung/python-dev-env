@@ -29,11 +29,11 @@
       * Installing with `pip install virtualenv` is stated to install globally. What if this is done with a `pip` installed with a version of Python by `pyenv`?
          * It will install `virtualenv` for the version of Python that's currently active via `pyenv`. Other versions of Python managed by `pyenv` will error out if `virtualenv` is invoked and has not been installed for said other version of Python. However, `pyenv` will also report that `virtualenv` is installed for a different version Python.
          
-         ```bash
+         ```
          # virtualenv
-pyenv: virtualenv: command not found
-The 'virtualenv' command exists in these Python versions:
-  2.7.14
+         pyenv: virtualenv: command not found
+         The 'virtualenv' command exists in these Python versions:
+         2.7.14
          ```
    
          * NOTE: Older versions of Python may get a `virtualenv` version of `pip` earlier than 9.0.1. You may run into [this TLS issue](https://stackoverflow.com/questions/49748063/pip-install-fails-for-every-package-could-not-find-a-version-that-satisfies/49748494#49748494). The fix is to upgrade `pip` and setuptools. The `pip` upgrade will need to be done with a curl pipe because `pip install -U pip` will have the same issue (it's a Catch 22). The curl pipe will only upgrade `pip` shimmed by the current `virtualenv`. This is because the script is piped into a Python which is currently copied and PATHed by `virtualenv`
