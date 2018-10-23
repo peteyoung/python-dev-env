@@ -1,7 +1,7 @@
-#Python Dev Env
+#Building a Python Dev Env
 ###Goals
 * Create a Python Dev enviroment on a given system with as few dependencies on any packaging system as possible.
-* Understand the ecosystem and interactions of python project utilities
+* Understand the ecosystem and interactions of python project utilities so we can build to suit
    * `pyenv`
    * `pip`
       * `pip install --user ...`
@@ -17,11 +17,11 @@
    * wheel
    * `cookiecutter`
 * Solve any chicken and egg questions: 
-   * Use OS/system package manager, or discreet python utilities?
+   * Use OS/system package manager, or discrete python utilities?
       * If you use OS/system package manager, you will only be as current as their repository.
    * `pip` or `pyenv ` first?
       * `pyenv` has no `python` dependencies, so if it doesn't exist on the system at all, you'll be fine.
-      * `pip` is installed by default by `pyenv` during a Python build/installation.5
+      * `pip` is installed by default by `pyenv` during a Python build/installation.
       * You can upgrade this `pip` with either `pip install -U pip` or the curl pipe method. Both will only upgrade `pip` in the currently active version of Python.
    * `pip` or `virtualenv` first?
       * `virtualenv` also installs `pip`. AAAAAGH!!! Did I mention it also installs setuptools too?
@@ -72,14 +72,32 @@ The 'virtualenv' command exists in these Python versions:
          * `pipenv`
    * When/where do you install `pipsi`?
    * What should be installed with `pipsi`?
-      * Anything that is a system level utility, not a python project level artifact, e.g. [`pygmentize`](http://pygments.org/docs/cmdline/)
-      
+      * Anything that is a system level utility, not a python project level artifact:
+         * [`ranger`](https://ranger.github.io/)
+         * [`pygmentize`](http://pygments.org/docs/cmdline/)
+
+###Things Learned
+* `pyenv` installs shimmed versions of stuff at its root level (no Python currently configured) and for each version of Python it installs
+   * The main ones to know are `pip` and, of course, `python`
+* `virtualenv` virtual environments are not tied to a project, but you can activate a virtual environment for one or more projects. They'll get the same Python version and libs if you use the same `activate`d environment.
+   * At first I believed you needed to create the virtual environment in the same folder as a project, and that it was tied to that project. Some people do follow this as an approach. You can choose to commit or .gitignore the `virtualenv` directories. 
+* `virtualenv ` also installs shimmed versions of stuff
+* when a `virtualenv` is `activate`d, its Python version will override any `pyenv` Python version settings for the life of a shell session or until `deactivate` is called
+* `virtualenv`'s `deactivate` is a shell function created when `activate` is called
+
 
 
 ###Meta
-* experiment using python docker image
+* experiment using as clean a python docker image as possible
+* Answer:
+   * What X does
+   * When to use X
+   * How to use X
+   * What happens to environment when X is installed
+   * How X install affects installs of Y, Z, AA, BB, etc...
 
-##Setup pip, virtualenv, pipenv, pyenv, pipsi
+
+##Setup the Development Environment
 ###OS/System level
 * bootstrap `pyenv`. It doesn't depend on `python`
 * 
@@ -101,8 +119,8 @@ eval "$(pyenv init -)"
 * install a `python`
    * `pyenv install 3.7.0`
 
-### Folder/Project level
-* activate a `python` in the current folder (has to be installed already)
+### Python level (done for a given install of Python)
+* activate a Python (has to be installed already)
    * `pyenv local 3.7.0`
 * check if `pip` is already installed (see [Do I need to install pip?](https://pip.pypa.io/en/stable/installing/#do-i-need-to-install-pip))
    * `pip -V`
@@ -110,21 +128,21 @@ eval "$(pyenv init -)"
    * Does this install to OS or pyenv?
    * `curl -O https://bootstrap.pypa.io/get-pip.py`
    * `./get-pip.py`
-* upgrade pip (only for your current `pyenv` context)
+* upgrade pip (only for your current Python activated by `pyenv`)
 	* `pip install -U pip`
-* install `virtualenv` each time you create a new `pyenv` directory
+* install `virtualenv`
 	* `pip install virtualenv`
-	* Is this the right way to do it
-	   * Probably, if you're using virtualenv vanilla
-	* Do I do this every time I create another `pyenv`?
-	   * No, you do it everytime you want to cordon off a Python development project and environment. Just be sure that the correct version of Python is active with pyenv, because virtualenv will make a copy of it.
-	   *
+	* Is this the right way to do it?
+	   * Yes, because you will need `virtualenv` installed relative to the Python version you want copied into the virtual environment. Once you `activate` a virtual environment, that version of Python effectively becomes the only visible version in the current shell session. It will override `pyenv` and any `.python_version` settings. The shell will remain configured as such until `deactivate` is called, or the shell session is terminated.
+	* Do I do this every time another Python version is installed?
+	   * No, you do it everytime you want to cordon off a Python development project and environment based on a Python version.	* You are ready to create virtual environments that use that particular version of Python
 
 
 
 
 
 ##The "Not So Sure About These" Section
+#####Everything in this section is from previous attempts and is dated. But it's still interesting information to some degree, and spurs the memory
 
 * install pipsi
 	* `python get-pipsi.py`
@@ -139,6 +157,8 @@ eval "$(pyenv init -)"
 #### Why do this
 * Install/upgrade pip and pipsi with pyenv's pip
    * `$(pyenv root)/shims/pip install -U pip pipsi`
+   * no really, why make a pipsi install relative to a pyenv?
+   * since `pipsi` is a system level utility, shouldn't `pipsi` install `pipsi`?
 
 
 ##Change python version with pyenv
