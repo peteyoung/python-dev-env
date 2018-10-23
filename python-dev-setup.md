@@ -1,5 +1,5 @@
-#Building a Python Dev Env
-###Goals
+# Building a Python Dev Env
+### Goals
 * Create a Python Dev enviroment on a given system with as few dependencies on any packaging system as possible.
 * Understand the ecosystem and interactions of python project utilities so we can build to suit
    * `pyenv`
@@ -29,7 +29,7 @@
       * Installing with `pip install virtualenv` is stated to install globally. What if this is done with a `pip` installed with a version of Python by `pyenv`?
          * It will install `virtualenv` for the version of Python that's currently active via `pyenv`. Other versions of Python managed by `pyenv` will error out if `virtualenv` is invoked and has not been installed for said other version of Python. However, `pyenv` will also report that `virtualenv` is installed for a different version Python.
          
-         ```
+         ```bash
          # virtualenv
 pyenv: virtualenv: command not found
 The 'virtualenv' command exists in these Python versions:
@@ -76,7 +76,7 @@ The 'virtualenv' command exists in these Python versions:
          * [`ranger`](https://ranger.github.io/)
          * [`pygmentize`](http://pygments.org/docs/cmdline/)
 
-###Things Learned
+### Things Learned
 * `pyenv` installs shimmed versions of stuff at its root level (no Python currently configured) and for each version of Python it installs
    * The main ones to know are `pip` and, of course, `python`
 * `virtualenv` virtual environments are not tied to a project, but you can activate a virtual environment for one or more projects. They'll get the same Python version and libs if you use the same `activate`d environment.
@@ -87,7 +87,7 @@ The 'virtualenv' command exists in these Python versions:
 
 
 
-###Meta
+### Meta
 * experiment using as clean a python docker image as possible
 * Answer:
    * What X does
@@ -97,8 +97,8 @@ The 'virtualenv' command exists in these Python versions:
    * How X install affects installs of Y, Z, AA, BB, etc...
 
 
-##Setup the Development Environment
-###OS/System level
+## Setup the Development Environment
+### OS/System level
 * bootstrap `pyenv`. It doesn't depend on `python`
 * 
 ```
@@ -141,8 +141,8 @@ eval "$(pyenv init -)"
 
 
 
-##The "Not So Sure About These" Section
-#####Everything in this section is from previous attempts and is dated. But it's still interesting information to some degree, and spurs the memory
+## The "Not So Sure About These" Section
+##### Everything in this section is from previous attempts and is dated. But it's still interesting information to some degree, and spurs the memory
 
 * install pipsi
 	* `python get-pipsi.py`
@@ -161,7 +161,7 @@ eval "$(pyenv init -)"
    * since `pipsi` is a system level utility, shouldn't `pipsi` install `pipsi`?
 
 
-##Change python version with pyenv
+## Change python version with pyenv
 * show python versions available for installation
    * 
 `pyenv install -l`
@@ -173,7 +173,7 @@ eval "$(pyenv init -)"
 `pyenv local XYZ`
 
 
-##Installation Docs
+## Installation Docs
 * [pyenv](https://github.com/pyenv/pyenv-installer#installation--update--uninstallation)
 * [pip](https://virtualenv.pypa.io/en/stable/installation/)
 * [virtualenv](https://virtualenv.pypa.io/en/stable/installation/)
@@ -182,7 +182,7 @@ eval "$(pyenv init -)"
 * [pyenv-virtualenvwrapper](https://github.com/pyenv/pyenv-virtualenvwrapper#installing-pyenv-virtualenvwrapper-as-a-pyenv-plugin)
 * [pipenv](https://pipenv.readthedocs.io/en/latest/install/#installing-pipenv)
 
-##Links
+## Links
 * [Python Virtual Environments: A Primer](https://realpython.com/python-virtual-environments-a-primer/)
 * [What is the difference between venv, pyvenv, pyenv, virtualenv, virtualenvwrapper, pipenv, etc?](https://stackoverflow.com/questions/41573587/what-is-the-difference-between-venv-pyvenv-pyenv-virtualenv-virtualenvwrappe)
 * [Installing Python Modules](https://docs.python.org/3/installing/index.html)
@@ -191,7 +191,7 @@ eval "$(pyenv init -)"
 * [`pip` user installs](https://pip.pypa.io/en/stable/user_guide/#user-installs)
 * [Change Python Version in an Existing Virtualenv]()
 
-##Links (older)
+## Links (older)
 * [pipsi - github](https://github.com/mitsuhiko/pipsi)
 * [pyenv - github](https://github.com/pyenv/pyenv)
 * [pyenv-installer - github](https://github.com/pyenv/pyenv-installer)
