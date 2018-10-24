@@ -100,8 +100,8 @@
 ### OS/System level
 * bootstrap `pyenv`. It doesn't depend on `python`
    * ```
-curl https://raw.githubusercontent.com/pyenv/pyenv-installer/master/bin/pyenv-installer | bash
-```
+     curl https://raw.githubusercontent.com/pyenv/pyenv-installer/master/bin/pyenv-installer | bash
+     ```
 
 * put the following in .bashrc or .bash_local
 * 
