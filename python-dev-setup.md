@@ -27,7 +27,7 @@
       * `virtualenv` also installs `pip`. AAAAAGH!!! Did I mention it also installs setuptools too?
          * While this is weird, it works out that `virtualenv`'s `pip` will override `pyenv`'s when the virtual environment is `activate`d.
       * Installing with `pip install virtualenv` is stated to install globally. What if this is done with a `pip` installed with a version of Python by `pyenv`?
-         * It will install `virtualenv` for the version of Python that's currently active via `pyenv`. Other versions of Python managed by `pyenv` will error out if `virtualenv` is invoked and has not been installed for said other version of Python. However, `pyenv` will also report that `virtualenv` is installed for a different version Python.
+         * It will install `virtualenv` for the version of Python that's currently active via `pyenv`. Other versions of Python managed by `pyenv` will error out if `virtualenv` is invoked and has not been installed for said other version of Python. However, `pyenv` will also report that `virtualenv` is installed for a different version of Python.
          
          ```
          # virtualenv
@@ -174,10 +174,10 @@ eval "$(pyenv init -)"
 * [pyenv](https://github.com/pyenv/pyenv-installer#installation--update--uninstallation)
 * [pip](https://virtualenv.pypa.io/en/stable/installation/)
 * [virtualenv](https://virtualenv.pypa.io/en/stable/installation/)
-* [virtualenvwrapper]
+* [virtualenvwrapper](https://virtualenvwrapper.readthedocs.io/en/latest/install.html#basic-installation)
 * [pyenv-virtualenv]
 * [pyenv-virtualenvwrapper](https://github.com/pyenv/pyenv-virtualenvwrapper#installing-pyenv-virtualenvwrapper-as-a-pyenv-plugin)
-* [pipenv](https://pipenv.readthedocs.io/en/latest/install/#installing-pipenv)
+* [pipenv](https://pipenv.readthedocs.io/en/latest/install/)
 
 ## Links
 * [Python Virtual Environments: A Primer](https://realpython.com/python-virtual-environments-a-primer/)
