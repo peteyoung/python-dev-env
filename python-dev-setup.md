@@ -163,14 +163,11 @@ eval "$(pyenv init -)"
 
 ## Change python version with pyenv
 * show python versions available for installation
-   * 
-`pyenv install -l`
+   * `pyenv install -l`
 * install a python
-   * 
-`pyenv install XYZ`
+   * `pyenv install XYZ`
 * Change to that python in your current directory
-   * 
-`pyenv local XYZ`
+   * `pyenv local XYZ`
 
 
 ## Installation Docs
