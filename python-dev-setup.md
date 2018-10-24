@@ -21,10 +21,10 @@
       * If you use OS/system package manager, you will only be as current as their repository.
    * `pip` or `pyenv ` first?
       * `pyenv` has no `python` dependencies, so if it doesn't exist on the system at all, you'll be fine.
-      * `pip` is installed by default by `pyenv` during a Python build/installation.
+      * `pip` is installed by default by `pyenv` during a Python build/installation. It is installed relative to that Python install, and is only visible to that Python install.
       * You can upgrade this `pip` with either `pip install -U pip` or the curl pipe method. Both will only upgrade `pip` in the currently active version of Python.
    * `pip` or `virtualenv` first?
-      * `virtualenv` also installs `pip`. AAAAAGH!!! Did I mention it also installs setuptools too?
+      * `virtualenv` also installs `pip` in each new virtual environment. AAAAAGH!!! Did I mention it also installs setuptools too? Both are only relative to, and visible to the Python copied into that virtual environment.
          * While this is weird, it works out that `virtualenv`'s `pip` will override `pyenv`'s when the virtual environment is `activate`d.
       * Installing with `pip install virtualenv` is stated to install globally. What if this is done with a `pip` installed with a version of Python by `pyenv`?
          * It will install `virtualenv` for the version of Python that's currently active via `pyenv`. Other versions of Python managed by `pyenv` will error out if `virtualenv` is invoked and has not been installed for said other version of Python. However, `pyenv` will also report that `virtualenv` is installed for a different version of Python.
@@ -49,7 +49,6 @@
       * `pyenv` first for sure. `virtualenv` will capture (by copying to its folder structure) the currently active Python for its virtual environment. Since `pip` is installed by `pyenv`, we can `pip install virtualenv`.	This will have to be done for each version of Python installed by `pyenv`
    * If `virtualenv` is used at the project level, where does it get installed, and how is the path updated to be able to call `virtualenv`? Is it shims?
       * `virtualenv` isn't necessarily used at the project level (e.g. a virtual environment for every project). You could use the same `virtualenv` environment for more than one project. A virtual environment, once `activate`d, is active for the life of the shell session until `deactivate` is called, or the shell is terminated
-         * **TODO** verify
    * When I commit code to `git` in a `virtualenv`, do I commit all the folders and files used by `virtualenv`?
       * This depends on whether or not you created your virtual environment in the same directory as your project. If so, since they're in a subfolder in your project folder, it's up to you. You could commit or .gitignore them. `virtualenvwrapper` avoids this problem by centralizing virtualenvs in a .folder in your home directory.
          * **TODO** is question relevant? Was asked w/o understanding interaction of `pyenv`/`virtualenv`
@@ -80,7 +79,7 @@
 * `pyenv` installs shimmed versions of stuff at its root level (no Python currently configured) and for each version of Python it installs
    * The main ones to know are `pip` and, of course, `python`
 * `virtualenv` virtual environments are not tied to a project, but you can activate a virtual environment for one or more projects. They'll get the same Python version and libs if you use the same `activate`d environment.
-   * At first I believed you needed to create the virtual environment in the same folder as a project, and that it was tied to that project. Some people do follow this as an approach. You can choose to commit or .gitignore the `virtualenv` directories. 
+   * At first I believed you needed to create the virtual environment in the same folder as a project, and that it was tied to that project. Some people follow this approach. You can choose to commit or .gitignore the `virtualenv` directories. 
 * `virtualenv ` also installs shimmed versions of stuff
 * when a `virtualenv` is `activate`d, its Python version will override any `pyenv` Python version settings for the life of a shell session or until `deactivate` is called
 * `virtualenv`'s `deactivate` is a shell function created when `activate` is called
@@ -100,8 +99,7 @@
 ## Setup the Development Environment
 ### OS/System level
 * bootstrap `pyenv`. It doesn't depend on `python`
-* 
-```
+   * ```
 curl https://raw.githubusercontent.com/pyenv/pyenv-installer/master/bin/pyenv-installer | bash
 ```
 
