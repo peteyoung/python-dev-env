@@ -104,12 +104,11 @@
      ```
 
 * put the following in .bashrc or .bash_local
-* 
-```
-export PYENV_ROOT="$HOME/.pyenv"
-export PATH="$PYENV_ROOT/bin:$PATH"
-eval "$(pyenv init -)"
-```
+    * ```
+      export PYENV_ROOT="$HOME/.pyenv"
+      export PATH="$PYENV_ROOT/bin:$PATH"
+      eval "$(pyenv init -)"
+      ```
 * `source` it in your current shell
    * `. ~/.bashrc`
 * pick a `python` or two to install
