@@ -54,19 +54,22 @@
    * When I commit code to `git` in a `virtualenv`, do I commit all the folders and files used by `virtualenv`?
       * This depends on whether or not you created your virtual environment in the same directory as your project. If so, since they're in a subfolder in your project folder, it's up to you. You could commit or .gitignore them. `virtualenvwrapper` avoids this problem by centralizing virtualenvs in a .folder in your home directory.
          * **TODO** is question relevant? Was asked w/o understanding interaction of `pyenv`/`virtualenv`
-   * How to switch `python` version in a `virtualenv`?
+   * How to switch the Python version in a `virtualenv`?
       * Since `virtualenv` copies the currently active Python while creating the virtual environment, your best bet is to:
          1.  create a new virtual environment with the Python you want.
          1. `activate` it.
          1. Pull down your code from the repository.
          1. `pip install -r requirements.txt`
          1. Go on your merry way.
-   * Should `virtualenvwrapper` be installed globally, user local with `pip install --user`, per `pyenv` Python versions, or per `virtualenv`?
-      * None of them feel appropriate
-         * Globally might work since it's mostly written in shell script. But what about the hook loader written in Python?
-         * User local is roughly the same as Globally. Again, what about the hook loader?
-         * Per `pyenv` environment might make sense due to the hook loader. What happens to `workon` once you've already decided to `workon` something and a virtual environment is activated?
+   * Should `virtualenvwrapper` be installed globally, as user local with `pip install --user`, per `pyenv` Python versions, or per `virtualenv`?
+      * None of them feel appropriate given an `pyenv` installation since `pyenv` creates essentially a new Python environment for each Python version installed.
+         * Globally might work since it's mostly written in shell script. But what about the hook loader written in Python? It makes sense given `virtualenvwrapper` is meant to make it easy to switch between centralized `virtualenv` virtual environments. Each of those could potentially have captured completely different Python versions.
+         * A user local install shares the same concerns and observations as a global install.
+         * Per `pyenv` environment might make sense due to the hook loader. But what happens to `workon` once you've already decided to `workon` something and a virtual environment is activated?
          * Per `virtualenv` environment doesn't make any sense. `virtualenvwrapper` is made to switch easily between virtual environments. Why trap an install inside one? All separate `virtualenvwrapper` installs would need to be configured to point to the same folder for virtual environments.
+      * The recommendation is to install "into the same global site-packages area where `virtualenv` is installed." See [here](https://virtualenvwrapper.readthedocs.io/en/latest/install.html) and [here](https://docs.python.org/install/index.html#alternate-installation-the-user-scheme).
+         * `virtualenv` itself needs a Python :\navailable to run. It also captures a copy of the available Python during creation of and into a virtual environment. This would seem to dictate that `virtualenv` should be installed per `pyenv` Python installation.
+         * Taking the above and the site-packages area recommendation into consideration, it seems that `virtualenvwrapper` should be installed into each `pyenv` Python installation as well.  
    * What needs to be installed before you install `pipenv`
       * Nothing really besides `pyenv`. `pip install --user pipenv` tries to install the following:
          * `pip` (exists already from pyenv)
@@ -78,8 +81,11 @@
    * When/where do you install `pipsi`?
    * What should be installed with `pipsi`?
       * Anything that is a system level utility, not a python project level artifact:
-         * [`ranger`](https://ranger.github.io/)
-         * [`pygmentize`](http://pygments.org/docs/cmdline/)
+         * [s3cmd](https://s3tools.org/s3cmd)
+         * [mercurial and `hg`](https://www.mercurial-scm.org/doc/hg.1.html)
+         * [Pygments and `pygmentize`](http://pygments.org/docs/cmdline/)
+         * [Jedi](https://pypi.org/project/jedi/)
+         * [Ranger](https://ranger.github.io/) (it's a little weird though, see [here](https://github.com/ranger/ranger/issues/621))
 
 ### Things Learned
 * `pyenv` installs shimmed versions of stuff at its root level (no Python currently configured) and for each version of Python it installs
