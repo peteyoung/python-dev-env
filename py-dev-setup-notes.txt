@@ -1,0 +1,379 @@
+# snippet to install everything needed for building Python with pyenv
+apk add man man-pages mdocml-apropos less less-doc bash bash-doc bash-completion curl curl-doc git git-doc build-base gcc-doc patch zlib-dev libffi-dev linux-headers readline-dev openssl openssl-dev sqlite-dev bzip2-dev
+
+# install pyenv pyenv-doctor pyenv-installer pyenv-update pyenv-virtualenv pyenv-which-ext
+curl https://raw.githubusercontent.com/pyenv/pyenv-installer/master/bin/pyenv-installer | bash
+
+
+# snippets to create shell initialization scripts
+cat <<'EOF' >> ~/.bashrc
+export PAGER=less
+export PATH="/root/.pyenv/bin:$PATH"
+eval "$(pyenv init -)"
+eval "$(pyenv virtualenv-init -)"
+EOF
+
+cat << EOF >> ~/.bash_profile
+# load .bashrc by default
+if [ -f ~/.bashrc ]; then
+    source ~/.bashrc
+fi
+
+cat << 'EOF' >> ~/.profile
+# load .bashrc by default
+. .bashrc
+
+# register this init with interactive ash shells
+ENV=$HOME/.bashrc
+export ENV
+EOF
+
+# end init snippets
+
+
+
+# install a python
+pyenv install 3.7.0
+
+
+
+
+# build pydev image from Dockerfile and run it
+docker build -t pydev .
+docker run --rm -it pydev /bin/bash
+
+
+# snippet to get pyenv configured in current env
+pyenv install -v 3.7.0
+pyenv local 3.7.0
+pip install -U pip
+
+
+# different iterm contexts I'm currently using
+~/src/pygithub
+~/src/pytest_fixtures
+~/notes/python-dev-setup
+~/src/pvp/PythonApp                   # see https://code.tutsplus.com/tutorials/understanding-virtual-environments-in-python--cms-28272
+~/notes/docker-alpine-python/docker
+
+
+# start and run bash in a container
+docker start some_container
+docker exec -it some_container /bin/bash
+
+
+# start and run bash in containers, and remove containers when shutdown
+docker run --rm -it pyenv_2715 /bin/bash
+docker run --rm -it pyenv_370 /bin/bash
+
+
+# create and run a new container, do some work, and commit container as new image
+docker run -it --name pyenv_2715 alpine /bin/ash
+docker commit --author "Pete Young pete@simpli.fi" pyenv_2715 pyenv_2715
+
+
+# executer a shell in a running container without and with env variables being set
+docker exec -it foofoo /bin/ash
+docker exec -it -e ENV=/root/.profile foofoo /bin/ash
+
+
+/ # curl https://raw.githubusercontent.com/pyenv/pyenv-installer/master/bin/pyenv-installer | bash
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100  2188  100  2188    0     0   9900      0 --:--:-- --:--:-- --:--:--  9855
+Cloning into '/root/.pyenv'...
+remote: Enumerating objects: 614, done.
+remote: Counting objects: 100% (614/614), done.
+remote: Compressing objects: 100% (426/426), done.
+remote: Total 614 (delta 297), reused 275 (delta 98), pack-reused 0
+Receiving objects: 100% (614/614), 357.90 KiB | 1.92 MiB/s, done.
+Resolving deltas: 100% (297/297), done.
+Cloning into '/root/.pyenv/plugins/pyenv-doctor'...
+remote: Enumerating objects: 11, done.
+remote: Counting objects: 100% (11/11), done.
+remote: Compressing objects: 100% (8/8), done.
+remote: Total 11 (delta 1), reused 6 (delta 1), pack-reused 0
+Unpacking objects: 100% (11/11), done.
+Cloning into '/root/.pyenv/plugins/pyenv-installer'...
+remote: Enumerating objects: 17, done.
+remote: Counting objects: 100% (17/17), done.
+remote: Compressing objects: 100% (14/14), done.
+remote: Total 17 (delta 2), reused 9 (delta 1), pack-reused 0
+Unpacking objects: 100% (17/17), done.
+Cloning into '/root/.pyenv/plugins/pyenv-update'...
+remote: Enumerating objects: 10, done.
+remote: Counting objects: 100% (10/10), done.
+remote: Compressing objects: 100% (6/6), done.
+remote: Total 10 (delta 1), reused 5 (delta 0), pack-reused 0
+Unpacking objects: 100% (10/10), done.
+Cloning into '/root/.pyenv/plugins/pyenv-virtualenv'...
+remote: Enumerating objects: 54, done.
+remote: Counting objects: 100% (54/54), done.
+remote: Compressing objects: 100% (48/48), done.
+remote: Total 54 (delta 10), reused 19 (delta 0), pack-reused 0
+Unpacking objects: 100% (54/54), done.
+Cloning into '/root/.pyenv/plugins/pyenv-which-ext'...
+remote: Enumerating objects: 10, done.
+remote: Counting objects: 100% (10/10), done.
+remote: Compressing objects: 100% (6/6), done.
+remote: Total 10 (delta 1), reused 4 (delta 0), pack-reused 0
+Unpacking objects: 100% (10/10), done.
+
+
+#shims installed with a pyenv 2.7.x build
+/ # ls -1 /root/.pyenv/plugins/
+pyenv-doctor
+pyenv-installer
+pyenv-update
+pyenv-virtualenv
+pyenv-which-ext
+python-build
+
+/ # ls -1 /root/.pyenv/plugins/pyenv-virtualenv/shims
+activate
+deactivate
+
+/ # ls -1 /root/.pyenv/shims/
+2to3
+easy_install
+easy_install-2.7
+idle
+pip
+pip2
+pip2.7
+pydoc
+python
+python-config
+python2
+python2-config
+python2.7
+python2.7-config
+smtpd.py
+
+
+# shims installed with a pyenv 3.7.x build
+/ # ls -1 /root/.pyenv/plugins/
+pyenv-doctor
+pyenv-installer
+pyenv-update
+pyenv-virtualenv
+pyenv-which-ext
+python-build
+
+/ # ls -1 /root/.pyenv/plugins/pyenv-virtualenv/shims
+activate
+deactivate
+
+/ # ls -1 /root/.pyenv/shims/
+2to3
+2to3-3.7
+easy_install
+easy_install-3.7
+idle
+idle3
+idle3.7
+pip
+pip3
+pip3.7
+pydoc
+pydoc3
+pydoc3.7
+python
+python-config
+python3
+python3-config
+python3.7
+python3.7-config
+python3.7m
+python3.7m-config
+pyvenv
+pyvenv-3.7
+
+
+
+
+#### PATH
+
+# raw alpine
+/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+
+# after installing packages with apk (same as above)
+/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+
+# after installing pyenv, but no Pythons (same as above)
+/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+
+# after initializing pyenv
+/root/.pyenv/plugins/pyenv-virtualenv/shims:/root/.pyenv/shims:/root/.pyenv/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+
+# after installing a Python with pyenv (same as above)
+/root/.pyenv/plugins/pyenv-virtualenv/shims:/root/.pyenv/shims:/root/.pyenv/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+
+# after activating a Python with pyenv (same as above)
+/root/.pyenv/plugins/pyenv-virtualenv/shims:/root/.pyenv/shims:/root/.pyenv/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+
+# after `pip install virtualenv`
+/root/.pyenv/plugins/pyenv-virtualenv/shims:/root/.pyenv/shims:/root/.pyenv/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+
+# after creating a virtualenv
+/root/.pyenv/plugins/pyenv-virtualenv/shims:/root/.pyenv/shims:/root/.pyenv/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+
+# after activating virtualenv
+/root/PythonApp/PythonAppVenv/bin:/root/.pyenv/plugins/pyenv-virtualenv/shims:/root/.pyenv/shims:/root/.pyenv/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+
+
+
+### Test pyenv installed Python versions in a folder hierarchy
+
+~ # ls -a
+.              ..             .ash_history   .bash_profile  .bashrc        .pyenv
+~ # python -V
+pyenv: python: command not found
+
+The `python' command exists in these Python versions:
+  2.7.13
+  2.7.15
+  3.7.0
+
+~ # mkdir p37 && cd $_
+~/p37 # python -V
+pyenv: python: command not found
+
+The `python' command exists in these Python versions:
+  2.7.13
+  2.7.15
+  3.7.0
+
+~/p37 # pyenv local 3.7.0
+~/p37 # python -V
+Python 3.7.0
+~/p37 # mkdir p2715 && cd $_
+~/p37/p2715 # ls -a
+.   ..
+~/p37/p2715 # python -V
+Python 3.7.0
+~/p37/p2715 # pyenv local 2.7.15
+~/p37/p2715 # ls -a
+.                ..               .python-version
+~/p37/p2715 # cat .python-version
+2.7.15
+~/p37/p2715 # python -V
+Python 2.7.15
+~/p37/p2715 # cd ..
+~/p37 # ls -a
+.                ..               .python-version  p2715
+~/p37 # cat .python-version
+3.7.0
+~/p37 # python -V
+Python 3.7.0
+~/p37 # cd ..
+~ # ls -a
+.              ..             .ash_history   .bash_profile  .bashrc        .pyenv         p37
+~ # python -V
+pyenv: python: command not found
+
+The `python' command exists in these Python versions:
+  2.7.13
+  2.7.15
+  3.7.0
+
+
+### Test activated virtualenv Python version in the same folder hierarchy
+
+~ # mkdir /venv && cd $_
+/venv # pyenv local 2.7.13
+/venv # ls -a
+.                ..               .python-version
+/venv # cat .python-version
+2.7.13
+/venv # pip install -U pip
+Collecting pip
+  Downloading https://files.pythonhosted.org/packages/c2/d7/90f34cb0d83a6c5631cf71dfe64cc1054598c843a92b400e55675cc2ac37/pip-18.1-py2.py3-none-any.whl (1.3MB)
+    100% |████████████████████████████████| 1.3MB 909kB/s
+Installing collected packages: pip
+  Found existing installation: pip 9.0.1
+    Uninstalling pip-9.0.1:
+      Successfully uninstalled pip-9.0.1
+Successfully installed pip-18.1
+/venv # pip install virtualenv
+Collecting virtualenv
+  Downloading https://files.pythonhosted.org/packages/b6/30/96a02b2287098b23b875bc8c2f58071c35d2efe84f747b64d523721dc2b5/virtualenv-16.0.0-py2.py3-none-any.whl (1.9MB)
+    100% |████████████████████████████████| 1.9MB 11.9MB/s
+Installing collected packages: virtualenv
+Successfully installed virtualenv-16.0.0
+/venv # ls -a
+.                ..               .python-version
+/venv # virtualenv 2713
+New python executable in /venv/2713/bin/python2.7
+Also creating executable in /venv/2713/bin/python
+Installing setuptools, pip, wheel...done.
+/venv # source 2713/bin/activate
+(2713) /venv # python -V
+Python 2.7.13
+(2713) /venv # cd ~/p37/p2715/
+(2713) ~/p37/p2715 # cat .python-version
+2.7.15
+(2713) ~/p37/p2715 # python -V
+Python 2.7.13
+(2713) ~/p37/p2715 # cd ..
+(2713) ~/p37 # cat .python-version
+3.7.0
+(2713) ~/p37 # python -V
+Python 2.7.13
+(2713) ~/p37 # cd ..
+(2713) ~ # cat .python-version
+cat: can't open '.python-version': No such file or directory
+(2713) ~ # python -V
+Python 2.7.13
+(2713) ~ # deactivate
+~ # python -V
+pyenv: python: command not found
+
+The `python' command exists in these Python versions:
+  2.7.13
+  2.7.15
+  3.7.0
+
+~ # cd p37
+~/p37 # python -V
+Python 3.7.0
+~/p37 # cd p2715/
+~/p37/p2715 # python -V
+Python 2.7.15
+
+NOTE: No matter the Python version set by `pyenv` in any given directory, whatever 
+version of Python captured by the active `virtualenv` virtual environment will be 
+the visible one
+
+
+### Test virtualenv across two separate shells on same instance
+~ # cd p37
+~/p37 # python -V
+Python 3.7.0
+~/p37 # . /venv/2713/bin/activate
+(2713) ~/p37 # python -V
+Python 2.7.13
+
+docker exec -it same_container /bin/ash
+~/# . ~/.bashrc  # init pyenv for ash
+~ # cd p37
+~/p37 # python -V
+Python 3.7.0
+
+NOTE: virtualenv is only active for the shell session it's `activate`d in
+
+
+
+
+### pipsi install script
+tries to detect `virtualenv` if running under Python < 3.x.x, assumes `venv` if running under Python > 3.x.x
+
+DEFAULT_PIPSI_HOME = '~/.local/venvs'
+DEFAULT_PIPSI_BIN_DIR = '~/.local/bin'
+
+checks if `pipsi` is installed already, if it does but it's not in $PATH, it adds it to $PATH
+fails if `virtualenv` or `venv` not detected
+
+TODO: more script analysis
+
+writes config to `~/.bashrc`, `~/.zshrc`, or `~/.config/fish/config.fish` depending on detected shell
