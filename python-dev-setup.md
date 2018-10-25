@@ -184,6 +184,7 @@
 * [Understanding Virtual Environments in Python](https://code.tutsplus.com/tutorials/understanding-virtual-environments-in-python--cms-28272)
 * [`pip` user installs](https://pip.pypa.io/en/stable/user_guide/#user-installs)
 * [Change Python Version in an Existing Virtualenv]()
+* [wronk/python\_environment\_setup.md](https://gist.github.com/wronk/a902185f5f8ed018263d828e1027009b)
 
 ## Links (older)
 * [pipsi - github](https://github.com/mitsuhiko/pipsi)
