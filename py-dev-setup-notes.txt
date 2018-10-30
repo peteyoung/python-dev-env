@@ -72,9 +72,9 @@ docker run -it --name pyenv_2715 alpine /bin/ash
 docker commit --author "Pete Young pete@simpli.fi" pyenv_2715 pyenv_2715
 
 
-# executer a shell in a running container without and with env variables being set
+# execute a shell in a running container without and with env variables being set
 docker exec -it foofoo /bin/ash
-docker exec -it -e ENV=/root/.profile foofoo /bin/ash
+docker exec -it -e ENV=/root/.bashrc foofoo /bin/ash
 
 
 / # curl https://raw.githubusercontent.com/pyenv/pyenv-installer/master/bin/pyenv-installer | bash
@@ -365,6 +365,91 @@ NOTE: virtualenv is only active for the shell session it's `activate`d in
 
 
 
+### Install virtualenvwrapper on fresh alpine container with Python 2.7
+
+apk add python
+# `source virtualenvwrapper.sh` fails under ash, so we need bash
+apk add bash
+apk add curl
+cd root
+curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
+
+python get-pip.py
+pip install virtualenvwrapper
+bash
+export WORKON_HOME=$HOME/.virtualenvs
+export PROJECT_HOME=$HOME/Devel
+source /usr/bin/virtualenvwrapper.sh
+
+bash-4.4# which pip
+/usr/bin/pip
+bash-4.4# which virtualenv
+/usr/bin/virtualenv
+bash-4.4# which virtualenvwrapper.sh
+/usr/bin/virtualenvwrapper.sh
+
+- or -
+
+python get-pip.py --user
+pip install --user virtualenvwrapper
+bash
+export PATH=$HOME/.local/bin:$PATH
+export WORKON_HOME=$HOME/.virtualenvs
+export PROJECT_HOME=$HOME/Devel
+source /root/.local/bin/virtualenvwrapper.sh
+
+bash-4.4# which pip
+/root/.local/bin/pip
+bash-4.4# which virtualenv
+/root/.local/bin/virtualenv
+bash-4.4# which virtualenvwrapper.sh
+/root/.local/bin/virtualenvwrapper.sh
+
+
+
+# create and play with a virtual environment using only `virtualenv`
+cd ~
+mkdir PythonApp && cd $_
+virtualenv PythonAppVenv
+source PythonAppVenv/bin/activate
+pip install flask
+pip freeze
+deactivate
+pip freeze
+rm -rf PythonApp/
+
+# create and play with virtual environments using `virtualenvwrapper`
+mkvirtualenv PythonVenv
+deactivate
+mkvirtualenv PythonVenv2
+deactivate
+lsvirtualenv
+workon PythonVenv
+workon PythonVenv2
+deactivate
+rmvirtualenv PythonVenv
+rmvirtualenv PythonVenv2
+lsvirtualenv
+
+# create and play with projects using `virtualenvwrapper`
+mkdir ~/Devel
+mkproject NewPythonProj
+pwd
+deactivate
+pwd
+cd ~
+mkproject NewPythonProj2
+pwd
+workon NewPythonProj
+pwd
+workon NewPythonProj2
+pwd
+deactivate
+
+
+
+
+
 ### pipsi install script
 tries to detect `virtualenv` if running under Python < 3.x.x, assumes `venv` if running under Python > 3.x.x
 
@@ -377,3 +462,7 @@ fails if `virtualenv` or `venv` not detected
 TODO: more script analysis
 
 writes config to `~/.bashrc`, `~/.zshrc`, or `~/.config/fish/config.fish` depending on detected shell
+
+
+
+
