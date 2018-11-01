@@ -8,7 +8,7 @@ curl https://raw.githubusercontent.com/pyenv/pyenv-installer/master/bin/pyenv-in
 # snippets to create shell initialization scripts
 cat <<'EOF' >> ~/.bashrc
 export PAGER=less
-export PATH="/root/.pyenv/bin:$PATH"
+export PATH="$HOME/.pyenv/bin:$PATH"
 eval "$(pyenv init -)"
 eval "$(pyenv virtualenv-init -)"
 EOF
@@ -74,45 +74,45 @@ docker commit --author "Pete Young pete@simpli.fi" pyenv_2715 pyenv_2715
 
 # execute a shell in a running container without and with env variables being set
 docker exec -it foofoo /bin/ash
-docker exec -it -e ENV=/root/.bashrc foofoo /bin/ash
+docker exec -it -e ENV=/home/developer/.bashrc foofoo /bin/ash
 
 
 / # curl https://raw.githubusercontent.com/pyenv/pyenv-installer/master/bin/pyenv-installer | bash
   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
                                  Dload  Upload   Total   Spent    Left  Speed
 100  2188  100  2188    0     0   9900      0 --:--:-- --:--:-- --:--:--  9855
-Cloning into '/root/.pyenv'...
+Cloning into '/home/developer/.pyenv'...
 remote: Enumerating objects: 614, done.
 remote: Counting objects: 100% (614/614), done.
 remote: Compressing objects: 100% (426/426), done.
 remote: Total 614 (delta 297), reused 275 (delta 98), pack-reused 0
 Receiving objects: 100% (614/614), 357.90 KiB | 1.92 MiB/s, done.
 Resolving deltas: 100% (297/297), done.
-Cloning into '/root/.pyenv/plugins/pyenv-doctor'...
+Cloning into '/home/developer/.pyenv/plugins/pyenv-doctor'...
 remote: Enumerating objects: 11, done.
 remote: Counting objects: 100% (11/11), done.
 remote: Compressing objects: 100% (8/8), done.
 remote: Total 11 (delta 1), reused 6 (delta 1), pack-reused 0
 Unpacking objects: 100% (11/11), done.
-Cloning into '/root/.pyenv/plugins/pyenv-installer'...
+Cloning into '/home/developer/.pyenv/plugins/pyenv-installer'...
 remote: Enumerating objects: 17, done.
 remote: Counting objects: 100% (17/17), done.
 remote: Compressing objects: 100% (14/14), done.
 remote: Total 17 (delta 2), reused 9 (delta 1), pack-reused 0
 Unpacking objects: 100% (17/17), done.
-Cloning into '/root/.pyenv/plugins/pyenv-update'...
+Cloning into '/home/developer/.pyenv/plugins/pyenv-update'...
 remote: Enumerating objects: 10, done.
 remote: Counting objects: 100% (10/10), done.
 remote: Compressing objects: 100% (6/6), done.
 remote: Total 10 (delta 1), reused 5 (delta 0), pack-reused 0
 Unpacking objects: 100% (10/10), done.
-Cloning into '/root/.pyenv/plugins/pyenv-virtualenv'...
+Cloning into '/home/developer/.pyenv/plugins/pyenv-virtualenv'...
 remote: Enumerating objects: 54, done.
 remote: Counting objects: 100% (54/54), done.
 remote: Compressing objects: 100% (48/48), done.
 remote: Total 54 (delta 10), reused 19 (delta 0), pack-reused 0
 Unpacking objects: 100% (54/54), done.
-Cloning into '/root/.pyenv/plugins/pyenv-which-ext'...
+Cloning into '/home/developer/.pyenv/plugins/pyenv-which-ext'...
 remote: Enumerating objects: 10, done.
 remote: Counting objects: 100% (10/10), done.
 remote: Compressing objects: 100% (6/6), done.
@@ -121,7 +121,7 @@ Unpacking objects: 100% (10/10), done.
 
 
 #shims installed with a pyenv 2.7.x build
-/ # ls -1 /root/.pyenv/plugins/
+/ # ls -1 ~/.pyenv/plugins/
 pyenv-doctor
 pyenv-installer
 pyenv-update
@@ -129,11 +129,11 @@ pyenv-virtualenv
 pyenv-which-ext
 python-build
 
-/ # ls -1 /root/.pyenv/plugins/pyenv-virtualenv/shims
+/ # ls -1 ~/.pyenv/plugins/pyenv-virtualenv/shims
 activate
 deactivate
 
-/ # ls -1 /root/.pyenv/shims/
+/ # ls -1 ~/.pyenv/shims/
 2to3
 easy_install
 easy_install-2.7
@@ -152,7 +152,7 @@ smtpd.py
 
 
 # shims installed with a pyenv 3.7.x build
-/ # ls -1 /root/.pyenv/plugins/
+/ # ls -1 ~/.pyenv/plugins/
 pyenv-doctor
 pyenv-installer
 pyenv-update
@@ -160,11 +160,11 @@ pyenv-virtualenv
 pyenv-which-ext
 python-build
 
-/ # ls -1 /root/.pyenv/plugins/pyenv-virtualenv/shims
+/ # ls -1 ~/.pyenv/plugins/pyenv-virtualenv/shims
 activate
 deactivate
 
-/ # ls -1 /root/.pyenv/shims/
+/ # ls -1 ~/.pyenv/shims/
 2to3
 2to3-3.7
 easy_install
@@ -204,22 +204,22 @@ pyvenv-3.7
 /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
 # after initializing pyenv
-/root/.pyenv/plugins/pyenv-virtualenv/shims:/root/.pyenv/shims:/root/.pyenv/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+/home/developer/.pyenv/plugins/pyenv-virtualenv/shims:/home/developer/.pyenv/shims:/home/developer/.pyenv/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
 # after installing a Python with pyenv (same as above)
-/root/.pyenv/plugins/pyenv-virtualenv/shims:/root/.pyenv/shims:/root/.pyenv/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+/home/developer/.pyenv/plugins/pyenv-virtualenv/shims:/home/developer/.pyenv/shims:/home/developer/.pyenv/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
 # after activating a Python with pyenv (same as above)
-/root/.pyenv/plugins/pyenv-virtualenv/shims:/root/.pyenv/shims:/root/.pyenv/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+/home/developer/.pyenv/plugins/pyenv-virtualenv/shims:/home/developer/.pyenv/shims:/home/developer/.pyenv/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
 # after `pip install virtualenv`
-/root/.pyenv/plugins/pyenv-virtualenv/shims:/root/.pyenv/shims:/root/.pyenv/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+/home/developer/.pyenv/plugins/pyenv-virtualenv/shims:/home/developer/.pyenv/shims:/home/developer/.pyenv/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
 # after creating a virtualenv
-/root/.pyenv/plugins/pyenv-virtualenv/shims:/root/.pyenv/shims:/root/.pyenv/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+/home/developer/.pyenv/plugins/pyenv-virtualenv/shims:/home/developer/.pyenv/shims:/home/developer/.pyenv/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
 # after activating virtualenv
-/root/PythonApp/PythonAppVenv/bin:/root/.pyenv/plugins/pyenv-virtualenv/shims:/root/.pyenv/shims:/root/.pyenv/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+/home/developer/venv1/bin:/home/developer/.pyenv/plugins/pyenv-virtualenv/shims:/home/developer/.pyenv/shims:/home/developer/.pyenv/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
 
 
@@ -371,12 +371,16 @@ apk add python
 # `source virtualenvwrapper.sh` fails under ash, so we need bash
 apk add bash
 apk add curl
-cd root
+adduser developer -D -G users
+
+docker commit --author "Pete Young pete@simpli.fi" some_container alpython
+docker run --rm -it -u developer alpython /bin/bash
+cd ~
 curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
+
 
 python get-pip.py
 pip install virtualenvwrapper
-bash
 export WORKON_HOME=$HOME/.virtualenvs
 export PROJECT_HOME=$HOME/Devel
 source /usr/bin/virtualenvwrapper.sh
@@ -396,15 +400,35 @@ bash
 export PATH=$HOME/.local/bin:$PATH
 export WORKON_HOME=$HOME/.virtualenvs
 export PROJECT_HOME=$HOME/Devel
-source /root/.local/bin/virtualenvwrapper.sh
+source ~/.local/bin/virtualenvwrapper.sh
 
-bash-4.4# which pip
-/root/.local/bin/pip
-bash-4.4# which virtualenv
-/root/.local/bin/virtualenv
-bash-4.4# which virtualenvwrapper.sh
-/root/.local/bin/virtualenvwrapper.sh
+bash-4.4$ which pip
+/home/developer/.local/bin/pip
+bash-4.4$ which virtualenv
+/home/developer/.local/bin/virtualenv
+bash-4.4$ which virtualenvwrapper.sh
+/home/developer/.local/bin/virtualenvwrapper.sh
 
+
+# in a virtualenv venv
+virtualenv venv1
+venv1/bin/activate
+
+(venv1) ~$ which pip
+/home/developer/venv1/bin/pip
+(venv1) ~$ which virtualenv
+/home/developer/.pyenv/shims/virtualenv
+(venv1) ~$ which virtualenvwrapper.sh
+/home/developer/venv1/bin/virtualenvwrapper.sh
+
+
+# just pyenv
+~$ which pip
+/home/developer/.pyenv/shims/pip
+~$ which virtualenv
+/home/developer/.pyenv/shims/virtualenv
+~$ which virtualenvwrapper.sh
+/home/developer/.pyenv/shims/virtualenvwrapper.sh
 
 
 # create and play with a virtual environment using only `virtualenv`
@@ -465,4 +489,27 @@ writes config to `~/.bashrc`, `~/.zshrc`, or `~/.config/fish/config.fish` depend
 
 
 
+
+### site package locations
+#python -m site
+python -c "import site; print(site.getsitepackages())"
+python -m site --user-site
+
+# pyenv 2.7.15
+~$ python -c "import site; print(site.getsitepackages())"
+['/home/developer/.pyenv/versions/2.7.15/lib/python2.7/site-packages', '/home/developer/.pyenv/versions/2.7.15/lib/site-python']
+~$ python -m site --user-site
+/home/developer/.local/lib/python2.7/site-packages
+
+# no pyenv 2.7.15
+~$ python -c "import site; print(site.getsitepackages())"
+['/usr/lib/python2.7/site-packages', '/usr/lib/site-python']
+~$ python -m site --user-site
+/home/developer/.local/lib/python2.7/site-packages
+
+# pyenv 3.7.0
+~$ python -c "import site; print(site.getsitepackages())"
+['/home/developer/.pyenv/versions/3.7.0/lib/python3.7/site-packages']
+~$ python -m site --user-site
+/home/developer/.local/lib/python3.7/site-packages
 
