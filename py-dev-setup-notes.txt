@@ -68,8 +68,8 @@ docker run --rm -it pyenv_370 /bin/bash
 
 
 # create and run a new container, do some work, and commit container as new image
-docker run -it --name pyenv_2715 alpine /bin/ash
-docker commit --author "Pete Young pete@simpli.fi" pyenv_2715 pyenv_2715
+docker run -it --name some_container alpine /bin/ash
+docker commit --author "Pete Young pete@simpli.fi" some_container new_image_name
 
 
 # execute a shell in a running container without and with env variables being set
@@ -431,6 +431,12 @@ venv1/bin/activate
 /home/developer/.pyenv/shims/virtualenvwrapper.sh
 
 
+which pip
+which virtualenv
+which virtualenvwrapper.sh
+
+
+
 # create and play with a virtual environment using only `virtualenv`
 cd ~
 mkdir PythonApp && cd $_
@@ -495,16 +501,22 @@ writes config to `~/.bashrc`, `~/.zshrc`, or `~/.config/fish/config.fish` depend
 python -c "import site; print(site.getsitepackages())"
 python -m site --user-site
 
-# pyenv 2.7.15
-~$ python -c "import site; print(site.getsitepackages())"
-['/home/developer/.pyenv/versions/2.7.15/lib/python2.7/site-packages', '/home/developer/.pyenv/versions/2.7.15/lib/site-python']
-~$ python -m site --user-site
-/home/developer/.local/lib/python2.7/site-packages
-
 # no pyenv 2.7.15
 ~$ python -c "import site; print(site.getsitepackages())"
 ['/usr/lib/python2.7/site-packages', '/usr/lib/site-python']
 ~$ python -m site --user-site
+/home/developer/.local/lib/python2.7/site-packages
+
+# pyenv 2.7.15
+~$ python -c "import site; print(site.getsitepackages())"
+['/home/developer/.pyenv/versions/2.7.15/lib/python2.7/site-packages', '/home/developer/.pyenv/versions/2.7.15/lib/site-python']
+~$ `
+/home/developer/.local/lib/python2.7/site-packages
+
+# pyenv 2.7.13
+~/13$ python -c "import site; print(site.getsitepackages())"
+['/home/developer/.pyenv/versions/2.7.13/lib/python2.7/site-packages', '/home/developer/.pyenv/versions/2.7.13/lib/site-python']
+~/13$ python -m site --user-site
 /home/developer/.local/lib/python2.7/site-packages
 
 # pyenv 3.7.0
@@ -512,4 +524,67 @@ python -m site --user-site
 ['/home/developer/.pyenv/versions/3.7.0/lib/python3.7/site-packages']
 ~$ python -m site --user-site
 /home/developer/.local/lib/python3.7/site-packages
+
+
+
+### sometimes pyenv is broken (this was done by standalone virtualenvwrapper)
+~/15$ which python
+/home/developer/.pyenv/shims/python
+~/15$ pyenv local 2.7.15
+~/15$ cat .python-version
+2.7.15
+~/15$ python -V
+Python 2.7.13
+
+
+
+
+
+### pyenv-virtualenv clears PYENV_VERSION
+~$ python -V
+pyenv: python: command not found
+
+The `python' command exists in these Python versions:
+  2.7.15
+  3.7.0
+
+~$ export PYENV_VERSION=3.7.0
+~$ python -V
+Python 3.7.0
+~$ pyenv virtualenv 2.7.15 p2715
+Collecting virtualenv
+  Downloading https://files.pythonhosted.org/packages/7c/17/9b7b6cddfd255388b58c61e25b091047f6814183e1d63741c8df8dcd65a2/virtualenv-16.1.0-py2.py3-none-any.whl (1.9MB)
+    100% |████████████████████████████████| 1.9MB 602kB/s
+Installing collected packages: virtualenv
+Successfully installed virtualenv-16.1.0
+You are using pip version 9.0.3, however version 18.1 is available.
+You should consider upgrading via the 'pip install --upgrade pip' command.
+New python executable in /home/developer/.pyenv/versions/2.7.15/envs/p2715/bin/python2.7
+Also creating executable in /home/developer/.pyenv/versions/2.7.15/envs/p2715/bin/python
+Installing setuptools, pip, wheel...
+done.
+Requirement already satisfied: setuptools in /home/developer/.pyenv/versions/2.7.15/envs/p2715/lib/python2.7/site-packages
+Requirement already satisfied: pip in /home/developer/.pyenv/versions/2.7.15/envs/p2715/lib/python2.7/site-packages
+~$ python -V
+Python 3.7.0
+~$ pyenv activate p2715
+pyenv-virtualenv: prompt changing will be removed from future release. configure `export PYENV_VIRTUALENV_DISABLE_PROMPT=1' to simulate the behavior.
+(p2715) ~$ python -V
+Python 2.7.15
+(p2715) ~$ pyenv deactivate
+~$ python -V
+pyenv: python: command not found
+
+The `python' command exists in these Python versions:
+  2.7.15
+  2.7.15/envs/p2715
+  3.7.0
+  p2715
+
+~$
+
+
+
+(set by /Users/peteyoung/.python-version)
+(set by /Users/peteyoung/.pyenv/version)
 
