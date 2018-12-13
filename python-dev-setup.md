@@ -15,6 +15,7 @@
    * `anaconda`/`conda`
    * setuptools
    * wheel
+   * poetry
    * `cookiecutter`
 * Solve any chicken and egg questions: 
    * Use OS/system package manager, or discrete python utilities?
@@ -76,7 +77,8 @@
          * Taking the above and the site-packages area recommendation into consideration, it seems that `virtualenvwrapper` should be installed into each `pyenv` Python installation as well.
       * Strange things happen while experimenting with virtualenvwrapper in a `pyenv`. Things like PYENV_VERSION and/or `.python-version` being ignored completely while changing directories. Seems it is best to not use `virtualenvwrapper` together with `pyenv`
    * What needs to be installed before you install `pipenv`
-      * Nothing really besides `pyenv`. `pip install --user pipenv` tries to install the following:
+      * Nothing really besides a Python or `pyenv`. 
+      * `pip install --user pipenv` tries to install the following:
          * `pip` (exists already from pyenv)
          * certifi
          * `virtualenv`
@@ -91,6 +93,7 @@
          * [Pygments and `pygmentize`](http://pygments.org/docs/cmdline/)
          * [Jedi](https://pypi.org/project/jedi/)
          * [Ranger](https://ranger.github.io/) (it's a little weird though, see [here](https://github.com/ranger/ranger/issues/621))
+   * How does `pyenv` relate to `#!/usr/bin/env python`?
 
 ### Things Learned
 * `pyenv` installs shimmed versions of stuff at its root level (no Python currently configured) and for each version of Python it installs
@@ -202,6 +205,7 @@
 * [`pip` user installs](https://pip.pypa.io/en/stable/user_guide/#user-installs)
 * [Change Python Version in an Existing Virtualenv]()
 * [wronk/python\_environment\_setup.md](https://gist.github.com/wronk/a902185f5f8ed018263d828e1027009b)
+* [`poetry`](https://poetry.eustace.io/)
 
 ## Links (other than dev env related)
 * [How do I find the location of my Python site-packages directory?](https://stackoverflow.com/questions/122327/how-do-i-find-the-location-of-my-python-site-packages-directory)
