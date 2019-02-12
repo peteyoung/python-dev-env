@@ -51,7 +51,7 @@
    * If I install `pip` with `get-pip.py` in a `pyenv` folder, is this `pip` relative to the OS/System or the `pyenv` folder?
       * **TODO** test and answer
    * `pyenv` or `virtualenv` first?
-      * `pyenv` first for sure. `virtualenv` will capture (by copying to its folder structure) the currently active Python for its virtual environment. Since `pip` is installed by `pyenv`, we can `pip install virtualenv`.	This will have to be done for each version of Python installed by `pyenv`
+      * `pyenv` first for sure. Creating a new `pyenv` installs not only `pip` but also `virtualenv`. 
    * If `virtualenv` is used at the project level, where does it get installed/created, and how is the path updated to be able to call `virtualenv`? Is it shims?
       * `virtualenv` isn't necessarily used at the project level (a virtual environment for every project). You could use the same `virtualenv` environment for more than one project, but you'd be sharing dependencies across those projects. More often then not, a virtual environment will be paired with a single project. 
       * The folder for the virtual environment will be created in the current directory when `virtualenv FooVenv` is invoked. This doesn't necessarily have to be in the same folder as a project.
@@ -67,15 +67,15 @@
          1. `pip install -r requirements.txt`
          1. Go on your merry way.
    * Should `virtualenvwrapper` be installed globally, as user local with `pip install --user`, per `pyenv` Python versions, or per `virtualenv`?
-      * None of them feel appropriate given a `pyenv` installation since `pyenv` creates essentially a new Python environment for each Python version installed.
-         * Globally might work since it's mostly written in shell script. But what about the hook loader written in Python? It makes sense given `virtualenvwrapper` is meant to make it easy to switch between centralized `virtualenv` virtual environments. Each of those could potentially have captured completely different Python versions.
-         * A user local install shares the same concerns and observations as a global install.
-         * Per `pyenv` environment might make sense due to the hook loader. But what happens to `workon` once you've already decided to `workon` something and a virtual environment is activated?
-         * Per `virtualenv` environment doesn't make any sense. `virtualenvwrapper` is made to switch easily between virtual environments. Why trap an install inside one? All separate `virtualenvwrapper` installs would need to be configured to point to the same folder for virtual environments.
+      * Don't install `virtualenvwrapper` if you're using `pyenv`. Install `pyenv-virtualenvwrapper` instead. It takes care of all of the following issues and questions
+         * Globally might work since it's mostly written in shell script. But what about the hook loader written in Python? It makes sense given `virtualenvwrapper` is meant to make it easy to switch between centralized `virtualenv` virtual environments. Each of those could potentially have captured completely different Python versions. Use `pyenv-virtualenvwrapper`
+         * A user local install shares the same concerns and observations as a global install. Use `pyenv-virtualenvwrapper`
+         * Per `pyenv` environment might make sense due to the hook loader. But what happens to `workon` once you've already decided to `workon` something and a virtual environment is activated? Use `pyenv-virtualenvwrapper`
+         * Per `virtualenv` environment doesn't make any sense. `virtualenvwrapper` is made to switch easily between virtual environments. Why trap an install inside one? All separate `virtualenvwrapper` installs would need to be configured to point to the same folder for virtual environments. Use `pyenv-virtualenvwrapper`
       * The recommendation is to install "into the same global site-packages area where `virtualenv` is installed." See [here](https://virtualenvwrapper.readthedocs.io/en/latest/install.html) and [here](https://docs.python.org/install/index.html#alternate-installation-the-user-scheme).
          * `virtualenv` itself needs a Python available to run. It also captures a copy of the available Python during creation of and into a virtual environment. This would seem to dictate that `virtualenv` should be installed per `pyenv` Python installation.
-         * Taking the above and the site-packages area recommendation into consideration, it seems that `virtualenvwrapper` should be installed into each `pyenv` Python installation as well.
-      * Strange things happen while experimenting with virtualenvwrapper in a `pyenv`. Things like PYENV_VERSION and/or `.python-version` being ignored completely while changing directories. Seems it is best to not use `virtualenvwrapper` together with `pyenv`
+         * Taking the above and the site-packages area recommendation into consideration, it seems that `virtualenvwrapper` should be installed into each `pyenv` Python installation as well. BUT DON'T DO THAT. Use `pyenv-virtualenvwrapper`
+      * Strange things happen while experimenting with `virtualenvwrapper` in a `pyenv`. Things like PYENV_VERSION and/or `.python-version` being ignored completely while changing directories. Seems it is best to not use `virtualenvwrapper` together with `pyenv`
    * What needs to be installed before you install `pipenv`
       * Nothing really besides a Python or `pyenv`. 
       * `pip install --user pipenv` tries to install the following:
