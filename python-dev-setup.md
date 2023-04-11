@@ -29,21 +29,21 @@
          * While this is weird, it works out that `virtualenv`'s `pip` will override `pyenv`'s when the virtual environment is `activate`d.
       * Installing with `pip install virtualenv` is stated to install globally. What if this is done with a `pip` installed with a version of Python by `pyenv`?
          * It will install `virtualenv` for the version of Python that's currently active via `pyenv`. Other versions of Python managed by `pyenv` will error out if `virtualenv` is invoked and has not been installed for said other version of Python. However, `pyenv` will also report that `virtualenv` is installed for a different version of Python.
-         
+
          ```
          # virtualenv
          pyenv: virtualenv: command not found
          The 'virtualenv' command exists in these Python versions:
          2.7.14
          ```
-   
+
          * NOTE: Older versions of Python may get a `virtualenv` version of `pip` earlier than 9.0.1. You may run into [this TLS issue](https://stackoverflow.com/questions/49748063/pip-install-fails-for-every-package-could-not-find-a-version-that-satisfies/49748494#49748494). The fix is to upgrade `pip` and setuptools. The `pip` upgrade will need to be done with a curl pipe because `pip install -U pip` will have the same issue (it's a Catch 22). The curl pipe will only upgrade `pip` shimmed by the current `virtualenv`. This is because the script is piped into a Python which is currently copied and PATHed by `virtualenv`
-         
+
          ```
          curl https://bootstrap.pypa.io/get-pip.py | python
          pip install --upgrade setuptools
          ```
-            
+
    * Should `virtualenv` be installed to each `pyenv` installed Python, or should it be installed once to a user local directory with `pip install --user virtualenv`, or should it be installed in the global site-package?
       * `virtualenv` will work "ok" either way. But you should just go ahead and use `pyenv-virtualenv` instead.
    * Should `virtualenvwrapper` be installed to each `pyenv` installed Python, or should it be installed once to a user local directory with `pip install --user virtualenvwrapper `, or should it be installed in the global site-package?
@@ -94,6 +94,48 @@
          * [Jedi](https://pypi.org/project/jedi/)
          * [Ranger](https://ranger.github.io/) (it's a little weird though, see [here](https://github.com/ranger/ranger/issues/621))
    * How does `pyenv` relate to `#!/usr/bin/env python`?
+   * Seems to work as expected on a mac, but Alpine Linux acted odd.
+
+       ```sh
+       mkdir test_python_version && cd $_
+       cat << EOF > pyver
+       #!/usr/bin/env python --version
+       EOF
+       chmod +x pyver
+       ./pyver
+       ```
+
+       ```text
+       Python 2.7.15
+       ```
+
+       ```sh
+       mkdir p37 && cd $_
+       pyenv local 3.7.0
+       cp ../pyver .
+       ./pyver
+       ```
+
+       ```text
+       Python 3.7.0
+       ```
+
+       ```sh
+       cd ..
+       p37/pyver
+       ```
+
+       ```text
+       Python 3.7.0
+       ```
+
+       ```sh
+       ./pyver
+       ```
+
+       ```text
+       Python 2.7.15
+       ```
 
 ### Things Learned
 * `pyenv` installs shimmed versions of stuff at its root level (no Python currently configured) and for each version of Python it installs
